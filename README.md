@@ -51,7 +51,7 @@ Node/Electron binding, which loads the SDK through the FFI package.
 ## Run it
 
 ```bash
-git clone https://github.com/SarthakPatil18/-Systole.git systole
+git clone https://github.com/SarthakPatil18/Systole.git systole
 cd systole
 npm install          # pulls @smartspectra/node-sdk + its per-platform native runtime
 npm start

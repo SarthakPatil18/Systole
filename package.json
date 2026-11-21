@@ -13,7 +13,8 @@
     "dist:mac": "npm run build && electron-builder --mac --arm64",
     "dist:win": "npm run build && electron-builder --win --x64",
     "dist:linux": "npm run build && electron-builder --linux --x64",
-    "build:smoke": "esbuild src/renderer.js --bundle --outfile=dist/renderer.smoke.js --platform=browser --format=iife --log-level=warning --alias:@smartspectra/node-sdk/renderer=./test/stubs/sdk-renderer.js --alias:@smartspectra/node-sdk/messages=./test/stubs/sdk-messages.js"
+    "build:smoke": "esbuild src/renderer.js --bundle --outfile=dist/renderer.smoke.js --platform=browser --format=iife --log-level=warning --alias:@smartspectra/node-sdk/renderer=./test/stubs/sdk-renderer.js --alias:@smartspectra/node-sdk/messages=./test/stubs/sdk-messages.js",
+    "check:sdk": "node test/sdk-check.js"
   },
   "dependencies": {
     "@smartspectra/node-sdk": "latest"

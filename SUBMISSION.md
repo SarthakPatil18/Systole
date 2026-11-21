@@ -38,10 +38,10 @@ The demo is a single unbroken take with the camera preview, the live pulse numbe
 
 ## Code
 
-**https://github.com/SarthakPatil18/-Systole.git** — MIT licensed, public, with setup instructions in the README.
+**https://github.com/SarthakPatil18/Systole** — MIT licensed, public, with setup instructions in the README.
 
 ```bash
-git clone https://github.com/SarthakPatil18/-Systole.git systole
+git clone https://github.com/SarthakPatil18/Systole.git systole
 cd systole
 npm install
 npm start            # paste your Presage API key into the consent sheet

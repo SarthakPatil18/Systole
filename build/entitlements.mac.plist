@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+    <!-- getUserMedia under the macOS hardened runtime. The
+         NSCameraUsageDescription string lives in Info.plist (see
+         package.json build.mac.extendInfo). -->
+    <key>com.apple.security.device.camera</key>
+    <true/>
+
+    <!-- The SmartSpectra dylibs are ad-hoc signed, not signed by your team
+         identity. Without this entitlement the hardened runtime refuses to load
+         them. The stricter alternative is re-signing every dylib before
+         packaging. -->
+    <key>com.apple.security.cs.disable-library-validation</key>
+    <true/>
+
+    <!-- Standard Electron/V8 requirements under the hardened runtime. -->
+    <key>com.apple.security.cs.allow-jit</key>
+    <true/>
+    <key>com.apple.security.cs.allow-unsigned-executable-memory</key>
+    <true/>
+</dict>
+</plist>
