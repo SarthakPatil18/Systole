@@ -1,0 +1,76 @@
+{
+  "name": "systole",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Systole - a camera-only musical instrument. Your pulse is the drummer, your breath is the orchestra. Built with the Presage SmartSpectra SDK.",
+  "main": "main.js",
+  "author": "",
+  "license": "MIT",
+  "scripts": {
+    "build": "esbuild src/renderer.js --bundle --outfile=dist/renderer.bundle.js --platform=browser --format=iife --log-level=warning",
+    "start": "npm run build && electron .",
+    "test": "node --test test/logic.test.js && npm run build:smoke && node test/smoke.js",
+    "dist:mac": "npm run build && electron-builder --mac --arm64",
+    "dist:win": "npm run build && electron-builder --win --x64",
+    "dist:linux": "npm run build && electron-builder --linux --x64",
+    "build:smoke": "esbuild src/renderer.js --bundle --outfile=dist/renderer.smoke.js --platform=browser --format=iife --log-level=warning --alias:@smartspectra/node-sdk/renderer=./test/stubs/sdk-renderer.js --alias:@smartspectra/node-sdk/messages=./test/stubs/sdk-messages.js"
+  },
+  "dependencies": {
+    "@smartspectra/node-sdk": "latest"
+  },
+  "devDependencies": {
+    "electron": "43.8.1",
+    "electron-builder": "^26.6.0",
+    "esbuild": "^0.25.0"
+  },
+  "build": {
+    "appId": "com.example.systole",
+    "productName": "Systole",
+    "files": [
+      "main.js",
+      "index.html",
+      "styles.css",
+      "dist/**",
+      "node_modules/**",
+      "!node_modules/@smartspectra/node-sdk-*/**",
+      "!node_modules/@smartspectra/node-sdk/scripts/**",
+      "!node_modules/@smartspectra/node-sdk/test/**",
+      "!node_modules/@smartspectra/node-sdk/samples/**",
+      "!node_modules/@smartspectra/node-sdk/prebuilds/**"
+    ],
+    "mac": {
+      "category": "public.app-category.music",
+      "hardenedRuntime": true,
+      "entitlements": "build/entitlements.mac.plist",
+      "entitlementsInherit": "build/entitlements.mac.plist",
+      "extendInfo": {
+        "NSCameraUsageDescription": "Systole uses the camera to read your pulse and breathing so it can respond to them. Video is processed on your device and is never recorded or uploaded."
+      },
+      "extraResources": [
+        {
+          "from": "node_modules/@smartspectra/node-sdk-darwin-${arch}/",
+          "to": "smartspectra"
+        }
+      ]
+    },
+    "win": {
+      "target": "nsis",
+      "extraResources": [
+        {
+          "from": "node_modules/@smartspectra/node-sdk-win32-${arch}/",
+          "to": "smartspectra"
+        }
+      ]
+    },
+    "linux": {
+      "target": "AppImage",
+      "extraResources": [
+        {
+          "from": "node_modules/@smartspectra/node-sdk-linux-${arch}/",
+          "to": "smartspectra"
+        }
+      ]
+    },
+    "asar": true
+  }
+}

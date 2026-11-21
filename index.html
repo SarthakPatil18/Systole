@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <!--
+    CSP note: the SmartSpectra renderer runs a Web Worker from a blob: URL, and
+    the camera MediaStream is attached to a blob-backed <video>, so worker-src
+    and media-src must allow blob:.
+  -->
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline'; worker-src 'self' blob:; media-src blob:; img-src 'self' data:;">
+  <title>Systole — a heartbeat you can play</title>
+  <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+  <div id="app">
+    <!-- left rail: camera + status -------------------------------------- -->
+    <aside class="rail left">
+      <div class="brand">
+        <span class="brand-mark"></span>
+        <div>
+          <h1>Systole</h1>
+          <p>a heartbeat you can play</p>
+        </div>
+      </div>
+
+      <div class="preview">
+        <video id="preview" autoplay playsinline muted></video>
+        <div id="preview-off" class="preview-off">camera off</div>
+        <div id="sim-badge" class="sim-badge" hidden>SIMULATED</div>
+      </div>
+
+      <div id="validation" class="hint">Camera is off.</div>
+      <div id="status" class="status status-idle">Idle</div>
+    </aside>
+
+    <!-- centre: the stage ---------------------------------------------- -->
+    <main class="stage">
+      <canvas id="stage-canvas"></canvas>
+      <div class="tempo">
+        <div class="tempo-value"><span id="bpm-main">—</span><span class="tempo-unit">bpm</span></div>
+        <div id="tempo-caption" class="tempo-caption">waiting for a pulse</div>
+      </div>
+      <div id="notice" class="notice" hidden></div>
+    </main>
+
+    <!-- right rail: readouts + controls -------------------------------- -->
+    <aside class="rail right">
+      <div class="readouts">
+        <div class="readout">
+          <span class="readout-label">Pulse</span>
+          <span class="readout-value"><b id="m-pulse">—</b><i>bpm</i></span>
+        </div>
+        <div class="readout">
+          <span class="readout-label">Breathing</span>
+          <span class="readout-value"><b id="m-breath">—</b><i>br/min</i></span>
+        </div>
+        <div class="readout">
+          <span class="readout-label">Signal</span>
+          <span class="readout-value"><b id="m-quality">—</b><i>%</i></span>
+        </div>
+        <div class="readout">
+          <span class="readout-label">Mode</span>
+          <span class="readout-value"><b id="m-mode">—</b><i>&nbsp;</i></span>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button id="btn-start" class="primary" type="button">Start</button>
+        <button id="btn-stop" type="button" disabled>Stop</button>
+      </div>
+
+      <div class="panel">
+        <div class="panel-label">Voice</div>
+        <div class="presets" role="radiogroup" aria-label="Voice">
+          <button class="preset is-active" data-preset="ember" type="button" role="radio" aria-checked="true">Ember</button>
+          <button class="preset" data-preset="tide" type="button" role="radio" aria-checked="false">Tide</button>
+          <button class="preset" data-preset="glass" type="button" role="radio" aria-checked="false">Glass</button>
+        </div>
+      </div>
+
+      <div class="panel">
+        <label class="panel-label" for="volume">Volume</label>
+        <input id="volume" type="range" min="0" max="100" value="70">
+        <button id="btn-mute" class="ghost" type="button" aria-pressed="false">Mute music</button>
+      </div>
+
+      <p class="fineprint">
+        Systole is an instrument, not a medical device. Pulse and breathing are
+        for wellness and entertainment only — not diagnosis, and not a vitals
+        monitor.
+      </p>
+    </aside>
+  </div>
+
+  <!-- consent gate ------------------------------------------------------ -->
+  <div id="consent" class="overlay">
+    <div class="sheet">
+      <h2>Before the camera goes on</h2>
+      <p class="lede">
+        Systole listens to your pulse and breathing through your webcam and turns
+        them into music. Here is exactly what that involves.
+      </p>
+
+      <ul class="facts">
+        <li>
+          <b>Your camera sees you; your device does the maths.</b>
+          Frames are read in this window by the Presage SmartSpectra SDK. Pulse,
+          breathing and HRV are computed on your machine.
+        </li>
+        <li>
+          <b>Nothing is recorded, saved, or uploaded by Systole.</b>
+          No video, no audio from the camera (the mic is never opened), no vitals
+          history, no session log. Close the window and the session is gone.
+        </li>
+        <li>
+          <b>One network call, and it has nothing to do with your body.</b>
+          The SDK authenticates your Presage API key and checks the subscription.
+          That is the only traffic Systole causes.
+        </li>
+        <li>
+          <b>Diagnostics are off unless you say otherwise.</b>
+          Presage's SDK can send aggregate session summaries (no video, no
+          measured values). The switch below is off by default.
+        </li>
+        <li>
+          <b>Stop whenever you like.</b>
+          <b>Stop</b> releases the camera immediately; macOS shows the camera
+          indicator whenever it is live.
+        </li>
+      </ul>
+
+      <div class="field">
+        <label for="api-key">Presage API key</label>
+        <input id="api-key" type="password" autocomplete="off" spellcheck="false"
+               placeholder="paste your key from physiology.presagetech.com">
+        <p class="field-note">Kept in memory for this session only — never written to disk.</p>
+      </div>
+
+      <label class="check">
+        <input id="opt-telemetry" type="checkbox">
+        <span>Share aggregate SDK diagnostics with Presage (no video, no vitals)</span>
+      </label>
+
+      <label class="check">
+        <input id="opt-consent" type="checkbox">
+        <span>I understand and consent to my camera being used to measure my pulse and breathing while Systole is running.</span>
+      </label>
+
+      <div id="consent-error" class="consent-error" hidden></div>
+
+      <div class="sheet-actions">
+        <button id="btn-begin" class="primary" type="button" disabled>Begin</button>
+        <button id="btn-demo" class="ghost" type="button">Try it without a camera (simulated signals)</button>
+      </div>
+
+      <p class="fineprint">
+        Systole is not a medical device and does not diagnose, treat, or monitor
+        any condition. Metrics are for general wellness and entertainment.
+      </p>
+    </div>
+  </div>
+
+  <script src="./dist/renderer.bundle.js"></script>
+</body>
+</html>
