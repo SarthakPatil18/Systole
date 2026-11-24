@@ -1,0 +1,47 @@
+{
+  "version": 2,
+  "skills": {
+    "codebase-design": {
+      "source": "mattpocock/skills",
+      "commit": "d65391149dbb5fe76478e76fa8d5122b2aa5a70e",
+      "sourceType": "github",
+      "skillPath": "skills/engineering/codebase-design/SKILL.md",
+      "computedHash": "d40f025dc1b0f2020663260f38f2bcb8d6ed3523afb11e5fda624b01238677e8"
+    },
+    "design-mobile-apps": {
+      "source": "designed-by-ai/skills",
+      "commit": "03c20aec6dcedb5fabfb03dc37982eb52ef19ed6",
+      "sourceType": "github",
+      "skillPath": "skills/design-mobile-apps/SKILL.md",
+      "computedHash": "eec6dae3f26f8f154fe190a53387f0b2eab39aa120932d5c33af7f3284f04b10"
+    },
+    "find-skills": {
+      "source": "vercel-labs/skills",
+      "commit": "57217cf86ba38148a57af9e90d14a4c049558330",
+      "sourceType": "github",
+      "skillPath": "skills/find-skills/SKILL.md",
+      "computedHash": "7bc223e2aafbdbf6e50ea243ba6ef67fe432bb069ab439fea0390795dac0bf7f"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "commit": "e4bb5d960d87126ff3b3a8af1a104b7db67560ba",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "83485963700bcf11d5bf78118facb301676b69d918fee2e45a95e7f1a2840f6c"
+    },
+    "ios-design": {
+      "source": "uizze.sh",
+      "sourceUrl": "https://uizze.sh/",
+      "sourceType": "well-known",
+      "computedHash": "bf6f8ac938352d92b8a1150f069c7c0a8ae4d9e18feccacc81862e2e7c72ebdb",
+      "wellKnownDigest": "sha256:ae3d720aa60c1655c3dae48bc07c448527e367ab24ed829020ba0a5f6268b691"
+    },
+    "ui-taste": {
+      "source": "uizze.sh",
+      "sourceUrl": "https://uizze.sh/",
+      "sourceType": "well-known",
+      "computedHash": "85da37a788dc4b5b63411e5681403d930b1077604a20497739fa05c8d21f01fc",
+      "wellKnownDigest": "sha256:f26d607ceb3f3a6fa8c98f8dbcb2b1aeb0392de1953e826bb8893d9e49983bf9"
+    }
+  }
+}

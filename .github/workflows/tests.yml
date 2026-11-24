@@ -1,0 +1,35 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  logic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      # The logic tests have no dependencies at all: the musical mapping, the
+      # breath normaliser and the beat detector are plain JavaScript. Keeping
+      # this job dependency-free means CI stays fast (and doesn't download the
+      # ~350 MB SmartSpectra native runtime on every push).
+      - name: Signal logic tests
+        run: node --test test/logic.test.js
+
+  # Uncomment to also verify the real SDK loads and accepts Systole's metric
+  # list. This downloads the per-platform native packages, so it is slow; it is
+  # a great release-time check rather than a per-push one.
+  #
+  # integration:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - uses: actions/setup-node@v4
+  #       with: { node-version: 20 }
+  #     - run: npm ci
+  #     - run: npm run build
+  #     - run: npm test
+  #     - run: npm run check:sdk

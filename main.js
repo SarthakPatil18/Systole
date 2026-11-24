@@ -42,7 +42,7 @@ function createWindow() {
     height: 820,
     minWidth: 1040,
     minHeight: 660,
-    backgroundColor: '#0b0a10',
+    backgroundColor: '#0b0a10', // --night in styles.css; painted before the page loads
     title: 'Systole',
     titleBarStyle: process.platform === 'darwin' ? 'hiddenInset' : 'default',
     webPreferences: {
