@@ -93,9 +93,9 @@ Systole's own code sends nothing extra on top of that.
 
 - **Presage Technologies** — the SmartSpectra SDK: on-device measurement,
   API-key authentication, and the telemetry described above if you opt in.
-- **Nobody else.** No analytics, no crash reporting, no ads, no data brokers. The
-  app loads no remote content, and `main.js` blocks navigation and popups so it
-  cannot be steered into any.
+- No analytics, no crash reporting, no ads, no data brokers. The app loads no
+  remote content, and `main.js` blocks navigation and popups so it cannot be
+  steered into any.
 
 ## Erasure
 

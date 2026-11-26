@@ -4,8 +4,8 @@
 the drums, your breath opens the orchestra, and the app is built on the
 [Presage SmartSpectra SDK](https://smartspectra.presagetech.com/docs).
 
-No wearable, no controller, no microphone. You sit in front of a webcam, press
-Start, and a generative piece of music starts keeping time with your heart.
+You sit in front of a webcam, press Start, and a generative piece of music
+starts keeping time with your heart.
 
 ```
 webcam ──► SmartSpectra SDK ──► SignalEngine ──► AudioEngine ──► speakers
@@ -27,8 +27,8 @@ webcam ──► SmartSpectra SDK ──► SignalEngine ──► AudioEngine �
 | **Expressions** | A smile or look of surprise raises the chance of a bell ornament. Flat or downcast expressions leave the room quiet. Optional — the app runs without it if the plan doesn't include face metrics. |
 | **Validation status** | Lighting / motion / framing problems visibly and audibly thin the music out instead of faking a reading. |
 
-Deliberate design choice: the UI never tells you what you are feeling. It shows
-pulse, breathing, signal quality and the musical mode. That's it.
+The UI never tells you what you are feeling. It shows pulse, breathing, signal
+quality and the musical mode. That's it.
 
 ---
 

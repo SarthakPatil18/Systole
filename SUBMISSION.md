@@ -19,11 +19,9 @@ SUBMISSION CHECKLIST — delete this block before publishing
 
 **Systole** is a musical instrument that only knows one thing about you: what your body is doing right now.
 
-You sit in front of a webcam, press Start, and it plays. Your **heartbeat is the drummer** — each systolic upstroke that SmartSpectra finds in the relative arterial pressure waveform fires a kick drum and a ring of light, and the interval between your actual beats *is* the tempo of the piece. Your **breathing opens the orchestra**: as your chest rises, a low-pass filter opens and the pad swells; as you exhale it closes again. Your **HRV picks the mode** (open major pentatonic when you are calmer than your own session baseline, minor pentatonic when you are more charged), your **pulse rate picks the key**, and a **smile adds a bell**.
+You sit in front of a webcam, press Start, and it plays. Your **heartbeat is the drummer**. Each systolic upstroke that SmartSpectra finds in the relative arterial pressure waveform fires a kick drum and a ring of light, and the interval between your actual beats *is* the tempo of the piece. Your **breathing opens the orchestra**. As your chest rises, a low-pass filter opens and the pad swells; as you exhale it closes again. Your **HRV picks the mode** (open major pentatonic when you are calmer than your own session baseline, minor pentatonic when you are more charged), your **pulse rate picks the key**, and a **smile adds a bell**.
 
-There is no wearable, no controller, no microphone, and no "tap here to play". The interface is your autonomic nervous system.
-
-The moment I was aiming for: you sit still, slightly bored, and then the kick drum lands **on your own heartbeat** — not near it, not at a tempo somebody typed in, but on the beat the SDK just heard in your face. People stop talking when that happens. Then they laugh, their pulse moves, and the music moves with it.
+You sit still, slightly bored, and then the kick drum lands on the beat the SDK just heard in your face. People stop talking when that happens. Then they laugh, their pulse moves, and the music moves with it.
 
 {% embed [VIDEO_URL] %}
 
@@ -72,8 +70,6 @@ deliberately the boring, recommended one for Electron:
   `kMetricNotAuthorized`), the app rebuilds without them and says so instead of
   dying.
 
-Then the interesting part:
-
 **1. Beats, not averages.** The SDK gives a waveform, not beat events, so
 `src/signal-engine.js` finds the systolic upstroke itself: a sample has to clear
 both the recent mean plus 35% of the swing *and* 72% of the recent peak-to-peak
@@ -109,13 +105,11 @@ built once — retuning, not reallocating — on every chord change.
 
 Entering **both** — I think the honest fit is somewhere in between.
 
-**Most Creative or Delightful Use.** The thing that made me build it: a pulse is
-something you cannot normally perceive without a device touching you, and music is
-the one medium where "here is what your body is doing" needs no explanation. Your
-heart becomes a drummer — not a visualisation of a drummer, an actual one, playing
-in time with you. The delight is the realisation that the room is being kept in
-time by your own body, and the fact that the same 90 seconds of demo makes people
-lean in, go quiet, then start tapping.
+**Most Creative or Delightful Use.** A pulse is something you cannot normally
+perceive without a device touching you, and music is the one medium where "here
+is what your body is doing" needs no explanation. The kick is scheduled from your
+beats. The same 90 seconds of demo makes people lean in, go quiet, then start
+tapping.
 
 **Best Thoughtful Real-World Use.** What I removed on purpose points at who this
 is for. There is **no wearable and no hands** — nothing to strap on, hold, tap or
